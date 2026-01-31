@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lien Raccourci</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gradient-to-br from-purple-50 via-pink-50 to-white min-h-screen flex items-center justify-center font-sans">
+    <div class="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 border border-gray-100 text-center space-y-6">
+      <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text">
+        Votre lien raccourci
+      </h1>
+
+      <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+        <a
+          href="{{ shortLink }}"
+          target="_blank"
+          class="block text-lg font-semibold text-gray-800 hover:text-purple-600 transition break-all"
+        >
+          {{ shortLink }}
+        </a>
+      </div>
+
+      <div class="flex flex-col items-center gap-4">
+        <!-- Bouton Copier -->
+        <button
+          onclick="navigator.clipboard.writeText('{{ shortLink }}')"
+          class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-lg shadow hover:shadow-lg transition"
+        >
+          Copier le mini-lien ici
+        </button>
+
+        <!-- QR Code -->
+    <canvas id="qrcode" class="p-2 bg-white border border-gray-200 rounded-xl shadow">
+    </canvas>
+
+    </div>
+
+    <!-- Génération QRCode -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+      QRCode.toCanvas(
+        document.getElementById("qrcode"),
+        "{{ shortLink }}",
+        { width: 150, margin: 2, color: { dark: "#4c1d95", light: "#ffffff" } },
+        function (error) {
+          if (error) console.error(error)
+        }
+      )
+    </script>
+  </body>
+</html>
